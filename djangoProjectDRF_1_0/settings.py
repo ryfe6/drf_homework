@@ -1,7 +1,9 @@
 import os
-
+from os import getenv
 from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-9kja(roa1+vng&#zd$5+u+^16aliyi@lkr9m7bf+6z_$4yk_yb"
+SECRET_KEY = getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -70,11 +72,11 @@ WSGI_APPLICATION = "djangoProjectDRF_1_0.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "drf_1_0",
-        "USER": "postgres",
-        "PASSWORD": 8953,
-        "HOST": "127.0.0.1",
-        "PORT": 5432,
+        "NAME": getenv("NAME"),
+        "USER": getenv("USER"),
+        "PASSWORD": getenv("PASSWORD"),
+        "HOST": getenv("HOST"),
+        "PORT": getenv("PORT"),
     }
 }
 
