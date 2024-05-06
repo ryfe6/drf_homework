@@ -1,0 +1,20 @@
+[
+{
+  "model": "ims.course",
+  "pk": 1,
+  "fields": {
+    "name": "HTML",
+    "img": "",
+    "description": null
+  }
+},
+{
+  "model": "ims.course",
+  "pk": 2,
+  "fields": {
+    "name": "CSS",
+    "img": "",
+    "description": null
+  }
+}
+]

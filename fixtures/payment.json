@@ -1,0 +1,38 @@
+[
+{
+  "model": "users.payment",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "payment_date": "2024-05-05T00:00:00Z",
+    "payment_course": 1,
+    "payment_lesson": 1,
+    "payment_sum": 3000,
+    "payment_method": "QR"
+  }
+},
+{
+  "model": "users.payment",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "payment_date": "2022-02-02T00:00:00Z",
+    "payment_course": 1,
+    "payment_lesson": 2,
+    "payment_sum": 8000,
+    "payment_method": "ÑÁÏ"
+  }
+},
+{
+  "model": "users.payment",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "payment_date": "2023-03-03T00:00:00Z",
+    "payment_course": 2,
+    "payment_lesson": 3,
+    "payment_sum": 5000,
+    "payment_method": "ÍÀËÈ×ÍÛÅ"
+  }
+}
+]

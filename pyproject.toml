@@ -13,6 +13,8 @@ python-dotenv = "^1.0.1"
 psycopg2-binary = "^2.9.9"
 pillow = "^10.3.0"
 black = "^24.4.2"
+django-filter = "^24.2"
+ipython = "^8.24.0"
 
 
 [build-system]

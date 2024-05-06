@@ -1,0 +1,35 @@
+[
+{
+  "model": "ims.lesson",
+  "pk": 1,
+  "fields": {
+    "name": "урок 1",
+    "course": 1,
+    "description": null,
+    "img": "",
+    "url": null
+  }
+},
+{
+  "model": "ims.lesson",
+  "pk": 2,
+  "fields": {
+    "name": "урок 2",
+    "course": 1,
+    "description": null,
+    "img": "",
+    "url": null
+  }
+},
+{
+  "model": "ims.lesson",
+  "pk": 3,
+  "fields": {
+    "name": "урок 3",
+    "course": 2,
+    "description": null,
+    "img": "",
+    "url": null
+  }
+}
+]
