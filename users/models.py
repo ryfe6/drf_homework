@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from ims.models import Course, Lesson
+
 
 NULLABLE = {"blank": True, "null": True}
 
@@ -31,6 +31,9 @@ class User(AbstractUser):
     class Meta:
         verbose_name = "пользователь"
         verbose_name_plural = "пользователи"
+
+
+from ims.models import Course, Lesson
 
 
 class Payment(models.Model):
