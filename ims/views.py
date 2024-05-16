@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import  IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from users.permissions import IsModer, IsAuthor
 from rest_framework.generics import (
@@ -23,17 +23,19 @@ class CourseViewSet(ModelViewSet):
         course.save()
 
     def get_permissions(self):
-        if self.action in ["create", "destroy"]:
-            self.permission_classes = (~IsModer,)
+        if self.action in ["create"]:
+            self.permission_classes = (IsAuthenticated,)
+        elif self.action in ["destroy"]:
+            self.permission_classes = (IsAuthenticated, IsAuthor,)
         elif self.action in ["update", "retrieve",]:
-            self.permission_classes = (IsModer, IsAuthor)
+            self.permission_classes = (IsAuthenticated, IsModer, IsAuthor)
         return super().get_permissions()
 
 
 class LessonCreateApiView(CreateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         course = serializer.save()
@@ -44,21 +46,22 @@ class LessonCreateApiView(CreateAPIView):
 class LessonListApiView(ListAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    permission_classes = [IsAuthenticated, IsAuthor]
 
 
 class LessonRetrieveApiView(RetrieveAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsModer | IsAuthor]
+    permission_classes = [IsAuthenticated, IsModer | IsAuthor]
 
 
 class LessonUpdateApiView(UpdateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsModer | IsAuthor]
+    permission_classes = [IsAuthenticated, IsModer | IsAuthor]
 
 
 class LessonDestroyApiView(DestroyAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAuthor]
