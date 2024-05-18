@@ -32,7 +32,10 @@ class CourseViewSet(ModelViewSet):
             self.permission_classes = (IsAuthenticated, ~IsModer)
         elif self.action in ["destroy"]:
             self.permission_classes = (IsAuthenticated, IsAuthor, ~IsModer)
-        elif self.action in ["update", "retrieve",]:
+        elif self.action in [
+            "update",
+            "retrieve",
+        ]:
             self.permission_classes = (IsAuthenticated, IsModer, IsAuthor)
         return super().get_permissions()
 
@@ -79,14 +82,14 @@ class SubscriptionCreateView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        course_id = self.request.data.get('course')
-        course_item = get_object_or_404(Course,pk=course_id)
+        course_id = self.request.data.get("course")
+        course_item = get_object_or_404(Course, pk=course_id)
 
-        if Subscription.objects.filter(user=user , course=course_item).exists():
+        if Subscription.objects.filter(user=user, course=course_item).exists():
             Subscription.objects.get(user=user, course=course_item).delete()
-            message = 'подписка удалена'
+            message = "подписка удалена"
         else:
             Subscription.objects.create(user=user, course=course_item)
-            message = 'подписка добавлена'
+            message = "подписка добавлена"
 
         return Response({"message": message})

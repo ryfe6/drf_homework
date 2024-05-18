@@ -9,12 +9,7 @@ class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = (
-            "id",
-            "name",
-            "course",
-            "url"
-        )
+        fields = ("id", "name", "course", "url")
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -34,4 +29,4 @@ class CourseSerializer(serializers.ModelSerializer):
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
-        fields = '__all__'
+        fields = "__all__"

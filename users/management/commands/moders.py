@@ -6,8 +6,9 @@ from users.models import User
 
 class Command(BaseCommand):
     """Скрипт для создания группы модератора в админке."""
+
     def handle(self, *args, **options):
-        moders_group, created = Group.objects.get_or_create(name='moders')
+        moders_group, created = Group.objects.get_or_create(name="moders")
 
         # Введите _email пользователя, который будет наделен правами модератора
         _email = "admin_2@ryfe.pro"
