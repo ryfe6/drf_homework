@@ -8,6 +8,7 @@ from ims.views import (
     LessonDestroyApiView,
     LessonRetrieveApiView,
     LessonListApiView,
+    SubscriptionCreateView,
 )
 from ims.apps import ImsConfig
 
@@ -29,6 +30,7 @@ urlpatterns = [
     path(
         "lessons/<int:pk>/update/", LessonUpdateApiView.as_view(), name="lessons_update"
     ),
+    path("subscription/create", SubscriptionCreateView.as_view(), name="subscription_create")
 ]
 
 urlpatterns += router.urls
