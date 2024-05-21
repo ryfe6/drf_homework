@@ -31,12 +31,12 @@ class CourseViewSet(ModelViewSet):
         if self.action in ["create"]:
             self.permission_classes = (IsAuthenticated, ~IsModer)
         elif self.action in ["destroy"]:
-            self.permission_classes = (IsAuthenticated, IsAuthor, ~IsModer)
+            self.permission_classes = (IsAuthenticated, ~IsModer, IsAuthor)
         elif self.action in [
             "update",
             "retrieve",
         ]:
-            self.permission_classes = (IsAuthenticated, IsModer, IsAuthor)
+            self.permission_classes = (IsAuthenticated, IsModer | IsAuthor)
         return super().get_permissions()
 
 
