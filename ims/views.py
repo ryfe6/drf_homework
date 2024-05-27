@@ -86,10 +86,11 @@ class SubscriptionCreateView(CreateAPIView):
         course_item = get_object_or_404(Course, pk=course_id)
 
         if Subscription.objects.filter(user=user, course=course_item).exists():
-            Subscription.objects.get(user=user, course=course_item).delete()
-            message = "подписка удалена"
+            subscription_instance = Subscription.objects.get(user=user, course=course_item)
+            subscription_instance.delete()
+            subscription_is = False
         else:
             Subscription.objects.create(user=user, course=course_item)
-            message = "подписка добавлена"
+            subscription_is = True
 
-        return Response({"message": message})
+        return Response({"subscription_is": subscription_is})
