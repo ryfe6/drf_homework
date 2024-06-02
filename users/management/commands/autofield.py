@@ -1,10 +1,10 @@
-from django.core.management import BaseCommand
-
-from users.models import User, Payment
-from ims.models import Course, Lesson
-
-from django.db import connection
 import json
+
+from django.core.management import BaseCommand
+from django.db import connection
+
+from ims.models import Course, Lesson
+from users.models import Payment, User
 
 
 class Command(BaseCommand):

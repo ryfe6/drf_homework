@@ -1,20 +1,19 @@
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet
-
-from ims.paginations import CustomPagination
-from users.permissions import IsModer, IsAuthor
+from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
     CreateAPIView,
+    DestroyAPIView,
     ListAPIView,
     RetrieveAPIView,
     UpdateAPIView,
-    DestroyAPIView,
 )
-
-from ims.models import Lesson, Course, Subscription
-from ims.serializers import LessonSerializer, CourseSerializer, SubscriptionSerializer
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+from rest_framework.viewsets import ModelViewSet
+
+from ims.models import Course, Lesson, Subscription
+from ims.paginations import CustomPagination
+from ims.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from users.permissions import IsAuthor, IsModer
 
 
 class CourseViewSet(ModelViewSet):
@@ -82,14 +81,14 @@ class SubscriptionCreateView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        course_id = self.request.data.get('course')
+        course_id = self.request.data.get("course")
         course_item = get_object_or_404(Course, pk=course_id)
 
         if Subscription.objects.filter(user=user, course=course_item).exists():
             Subscription.objects.get(user=user, course=course_item).delete()
-            message = 'подписка удалена'
+            message = "подписка удалена"
         else:
             Subscription.objects.create(user=user, course=course_item)
-            message = 'подписка добавлена'
+            message = "подписка добавлена"
 
         return Response({"message": message})

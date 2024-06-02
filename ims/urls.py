@@ -1,17 +1,33 @@
+from django.urls import include, path
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 from rest_framework.routers import SimpleRouter
-from django.urls import path
 
+from ims.apps import ImsConfig
 from ims.views import (
     CourseViewSet,
     LessonCreateApiView,
-    LessonUpdateApiView,
     LessonDestroyApiView,
-    LessonRetrieveApiView,
     LessonListApiView,
+    LessonRetrieveApiView,
+    LessonUpdateApiView,
     SubscriptionCreateView,
 )
-from ims.apps import ImsConfig
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="API IMS Documentation",
+        default_version="v1.0",
+        description="Документация учебного проекта. "
+        "Цель проекта - создание платформы для приобретения и оплаты онлайн курсов и уроков.",
+        terms_of_service="https://www.example.com/policies/terms/",
+        contact=openapi.Contact(email="admin@sky.pro"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 app_name = ImsConfig.name
 
 router = SimpleRouter()
@@ -35,6 +51,15 @@ urlpatterns = [
         SubscriptionCreateView.as_view(),
         name="subscription_create",
     ),
+    path(
+        "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
+    ),
+    path(
+        "swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
 
 urlpatterns += router.urls

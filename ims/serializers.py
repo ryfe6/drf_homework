@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from ims.validators import ValidateGoodUrl
 
-from ims.models import Lesson, Course, Subscription
+from ims.models import Course, Lesson, Subscription
+from ims.validators import ValidateGoodUrl
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -28,7 +28,14 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ("id", "name", "lesson", "subscription", "count_lesson_in_course", "course_subscription")
+        fields = (
+            "id",
+            "name",
+            "lesson",
+            "subscription",
+            "count_lesson_in_course",
+            "course_subscription",
+        )
 
     def get_count_lesson_in_course(self, instance):
         if instance.lesson_set.all().count():
@@ -36,7 +43,7 @@ class CourseSerializer(serializers.ModelSerializer):
         return 0
 
     def get_course_subscription(self, instance):
-        user = self.context['request'].user
+        user = self.context["request"].user
         if Subscription.objects.filter(user=user, course=instance).exists():
             return True
         return False

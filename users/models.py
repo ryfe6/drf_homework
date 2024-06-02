@@ -1,6 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.db import models
+from django.utils import timezone
 
 NULLABLE = {"blank": True, "null": True}
 
@@ -37,19 +37,26 @@ from ims.models import Course, Lesson
 
 
 class Payment(models.Model):
+    payment_methods_variants = (("Наличные", "cash"), ("Перевод на счёт", "card"))
 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="пользователь", **NULLABLE
     )
-    payment_date = models.DateTimeField(verbose_name="дата", **NULLABLE)
+    payment_date = models.DateTimeField(verbose_name="дата", default=timezone.now)
     payment_course = models.ForeignKey(
         Course, on_delete=models.CASCADE, verbose_name="оплаченный курс", **NULLABLE
     )
     payment_lesson = models.ForeignKey(
         Lesson, on_delete=models.CASCADE, verbose_name="оплаченный предмет", **NULLABLE
     )
-    payment_sum = models.PositiveIntegerField(verbose_name="сумма оплаты", **NULLABLE)
-    payment_method = models.CharField(max_length=100, verbose_name="способ оплаты")
+    link = models.URLField(max_length=400, verbose_name="Cсылка на оплату", **NULLABLE)
+    payment_sum = models.PositiveIntegerField(verbose_name="сумма оплаты", default=100)
+    payment_method = models.CharField(
+        max_length=100,
+        choices=payment_methods_variants,
+        default="cash",
+        verbose_name="способ оплаты",
+    )
 
     def __str__(self):
 
