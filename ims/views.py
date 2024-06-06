@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
     CreateAPIView,
@@ -14,6 +16,7 @@ from ims.models import Course, Lesson, Subscription
 from ims.paginations import CustomPagination
 from ims.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
 from users.permissions import IsAuthor, IsModer
+from ims.tasks import check_update
 
 
 class CourseViewSet(ModelViewSet):
@@ -37,6 +40,13 @@ class CourseViewSet(ModelViewSet):
         ]:
             self.permission_classes = (IsAuthenticated, IsModer | IsAuthor)
         return super().get_permissions()
+
+    def perform_update(self, serializer):
+        super().perform_update(serializer)
+        # После сохранения изменений в курсе, вызываем задачу Celery.
+        course_id = serializer.instance.id
+        course_name = serializer.instance.name
+        check_update.delay(course_id, course_name)
 
 
 class LessonCreateApiView(CreateAPIView):
